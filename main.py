@@ -1,5 +1,5 @@
 #region VEXcode Generated Robot Configuration
-import math
+from math import *
 import random
 from vexcode_vrc import *
 from vexcode_vrc.events import get_Task_func
@@ -25,13 +25,18 @@ RED_HIGH_GOAL_COORDINATE  = [ 1307,  1307]
 #region helper functions
 def format_angle(a):
     """Map an arbitary angle to -180 to 180 degrees format"""
+    # check whether the angle is positive
     sign = 1
     if a < 0:
         sign = -1
     else:
         sign = 1
+    
     positive_a = abs(a)
+
+    # eliminate coterminal angles greater than 360 degrees
     mod = positive_a % 360
+
     if (mod <= 180):
         return sign * mod
     else:
@@ -59,6 +64,8 @@ class Chassis:
         """Orients the robot to a specific absolute orientation"""
         drivetrain.set_turn_velocity(100,PERCENT)
         position = Coordinates(gps.x_position(MM), gps.y_position(MM), gps.heading())
+
+        # calculates the angle of rotation
         target_angle = format_angle(angle - position.theta)
         drivetrain.turn_for(RIGHT, target_angle, DEGREES)
 
@@ -66,35 +73,61 @@ class Chassis:
         """Rotates the robot to face a specific coordinate on the field"""
         drivetrain.set_turn_velocity(100,PERCENT)
         position = Coordinates(gps.x_position(MM), gps.y_position(MM), gps.heading())
+
+        # relative coordinate difference between the point and the robot's position
         x_dist = x - position.x
         y_dist = y - position.y
-        dist = sqrt(x_dist**2 + y_dist**2)
+
+        # absolute orientation to face a point
         target_angle = 90 - atan2(y_dist, x_dist) * 180 / pi
+
         if aiming:
+            # face the coordinate backwards
             drivetrain.turn_for(RIGHT, float(format_angle(180 + target_angle - position.theta + offset)), DEGREES)
         else:
+            # face the coordinate
             drivetrain.turn_for(RIGHT, float(format_angle(target_angle - position.theta + offset)), DEGREES)
 
     def move_to_point(self, x, y):
         """Moves the robot to a specific coordinate on the field"""
         drivetrain.set_drive_velocity(100, PERCENT)
         position = Coordinates(gps.x_position(MM), gps.y_position(MM), gps.heading())
+
+        # relative coordinate difference between the point and the robot's position
         x_dist = x - position.x
         y_dist = y - position.y
+
+        # calculate the distance to the point
         dist = sqrt(x_dist**2 + y_dist**2)
+
+        # absolute orientation to face a point
         target_angle = 90 - atan2(y_dist, x_dist) * 180 / pi
+
+        # face the coordinate
         drivetrain.turn_for(RIGHT, float(format_angle(target_angle - position.theta)), DEGREES)
+        
+        # move to the point
         drivetrain.drive_for(FORWARD, dist, MM)
 
     def move_to_point_backwards(self, x, y):
         """Moves the robot backwards to a specific coordinate on the field"""
         drivetrain.set_drive_velocity(100, PERCENT)
         position = Coordinates(gps.x_position(MM), gps.y_position(MM), gps.heading())
+
+        # relative coordinate difference between the point and the robot's position
         x_dist = x - position.x
         y_dist = y - position.y
+
+        # distance to the point
         dist = sqrt(x_dist**2 + y_dist**2)
+
+        # absolute orientation to face a point
         target_angle = 90 - atan2(y_dist, x_dist) * 180 / pi
+
+        # face the coordinate backwards
         drivetrain.turn_for(RIGHT, float(format_angle(180 + target_angle - position.theta)), DEGREES)
+        
+        # move backwards to the point
         drivetrain.drive_for(REVERSE, dist, MM)
 
 class Roller:
@@ -116,6 +149,7 @@ class Roller:
         drivetrain.stop()
         drivetrain.drive_for(REVERSE, 35, MM)
 
+        # Spin the intake to score the roller
         intake_motor_group.set_velocity(100, PERCENT)
         intake_motor_group.spin_for(FORWARD, 35, DEGREES)
 
@@ -132,22 +166,27 @@ class Robot:
 
     @staticmethod
     def face_angle(angle):
+        """Orients the robot to a specific absolute orientation"""
         Robot.__instance__.chassis.face_angle(angle)
     
     @staticmethod
     def face_coordinate(x, y, aiming = False, offset = 0):
+        """Rotates the robot to face a specific coordinate on the field"""
         Robot.__instance__.chassis.face_coordinate(x, y, aiming, offset)
     
     @staticmethod
     def move_to_point(x, y):
-       Robot.__instance__.chassis.move_to_point(x, y)
+        """Moves the robot to a specific coordinate on the field"""
+        Robot.__instance__.chassis.move_to_point(x, y)
     
     @staticmethod
     def move_to_point_backwards(x, y):
+        """Moves the robot backwards to a specific coordinate on the field"""
         Robot.__instance__.chassis.move_to_point_backwards(x, y)
     
     @staticmethod
     def score_roller():
+        """Score the roller in front of the robot"""
         Robot.__instance__.roller.score()
 
     @staticmethod
