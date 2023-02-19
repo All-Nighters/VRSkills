@@ -227,35 +227,43 @@ def main():
     # Blue half field route
     # ------------------------------------------------------------------------
 
-    # 3 disks and 1 roller
+    # shoot out first three disks
     robot.face_coordinate(BLUE_HIGH_GOAL_COORDINATE[0], BLUE_HIGH_GOAL_COORDINATE[1], aiming=True, offset=-2)
     intake_motor_group.spin(REVERSE)
     robot.move_to_point(-1450, 1260)
     robot.face_coordinate(BLUE_HIGH_GOAL_COORDINATE[0], BLUE_HIGH_GOAL_COORDINATE[1], aiming=True, offset=-2)
     robot.shoot_disk(degrees=110)
+    
+    # score one roller
     robot.face_angle(90)
     robot.score_roller()
 
-    # 1 roller
+    # score one roller
     drivetrain.drive_for(FORWARD, 20, MM)
     robot.move_to_point(-900, 1475)
     robot.face_angle(180)
     robot.score_roller()
 
-    # 3 stacked disks 
-    robot.move_to_point(-900, 1097)
+    # intake three stacked disks (move at the same time)
+    robot.move_to_point(-900, 1120)
+    drivetrain.set_drive_velocity(17, PERCENT)
+    drivetrain.drive(FORWARD)
     intake_motor_group.spin_for(REVERSE, 100, DEGREES)
+    drivetrain.stop()
+    drivetrain.set_drive_velocity(100, PERCENT)
+
+    # shoot out three disks (move at the same time)
     intake_motor_group.set_velocity(30, PERCENT)
     intake_motor_group.spin(REVERSE)
-    robot.face_coordinate(RED_HIGH_GOAL_COORDINATE[0], RED_HIGH_GOAL_COORDINATE[1], aiming=True, offset=-4.5)
+    robot.face_coordinate(RED_HIGH_GOAL_COORDINATE[0], RED_HIGH_GOAL_COORDINATE[1], aiming=True, offset=-4.6)
     intake_motor_group.set_velocity(90, PERCENT)
     drivetrain.set_drive_velocity(40, PERCENT)
-    drivetrain.drive_for(REVERSE, 350, MM)
+    drivetrain.drive_for(REVERSE, 400, MM)
     intake_motor_group.stop()
     intake_motor_group.set_velocity(100, PERCENT)
 
-    # 3 disks
-    intake_motor_group.set_velocity(70, PERCENT)
+    # intake and shoot out three disks (move at the same time)
+    intake_motor_group.set_velocity(80, PERCENT)
     intake_motor_group.spin(REVERSE)    
     robot.move_to_point(298, 290)
     intake_motor_group.set_velocity(1.5, PERCENT)
@@ -268,9 +276,8 @@ def main():
     drivetrain.set_drive_velocity(100, PERCENT)
     intake_motor_group.set_velocity(100, PERCENT)
 
-    # 3 blue low goal disks
+    # intake and shoot out three blue low goal disks
     intake_motor_group.spin(REVERSE)
-    # robot.move_to_point(440, 425)
     robot.move_to_point(450, 500)
     robot.move_to_point(440, 700)
     robot.move_to_point(450, 900)
@@ -281,7 +288,7 @@ def main():
     robot.face_coordinate(BLUE_HIGH_GOAL_COORDINATE[0], BLUE_HIGH_GOAL_COORDINATE[1], aiming=True, offset=-1)
     robot.shoot_disk(degrees=100)
 
-    # 3 blue low goal disks + 7 match load
+    # intake three blue low goal disks
     intake_motor_group.set_velocity(90, PERCENT)
     intake_motor_group.spin(REVERSE)
     robot.move_to_point(520, 400)
@@ -290,39 +297,43 @@ def main():
     robot.face_angle(80)
     wait(50,MSEC)
     intake_motor_group.set_velocity(1.5, PERCENT)
+
+    # shoot out three blue low goal disks and seven match load
     robot.move_to_point(1538, 212)
     robot.face_coordinate(RED_HIGH_GOAL_COORDINATE[0], RED_HIGH_GOAL_COORDINATE[1], aiming=True, offset=7.2)
     intake_motor_group.set_velocity(100, PERCENT)
     robot.shoot_disk(degrees=398)
     
-    # 6 stacked disks
+    # intake three stacked disks (move at the same time)
     robot.move_to_point(1125, -153)
-    drivetrain.set_drive_velocity(7, PERCENT)
+    drivetrain.set_drive_velocity(6, PERCENT)
     drivetrain.drive(FORWARD)
     intake_motor_group.spin_for(REVERSE, 85, DEGREES)
     drivetrain.stop()
     drivetrain.set_drive_velocity(100, PERCENT)
     intake_motor_group.stop()
+
+    # shoot out six disks (move at the same time)
     robot.face_angle(191)
     intake_motor_group.set_velocity(92, PERCENT)
     intake_motor_group.spin(REVERSE)
     robot.move_to_point(928, -694)
-    drivetrain.set_drive_velocity(15, PERCENT)
+    drivetrain.set_drive_velocity(16, PERCENT)
     drivetrain.drive(FORWARD)
     robot.shoot_disk(degrees=180)
     drivetrain.stop()
     drivetrain.set_drive_velocity(100, PERCENT)
     intake_motor_group.set_velocity(100, PERCENT)
 
-    # 2 rollers + 2 disks
-    intake_motor_group.set_velocity(80, PERCENT)
+    # intake and shoot out two disks
     intake_motor_group.spin(REVERSE)
-    robot.move_to_point(1402, -1422)
+    robot.move_to_point(1342, -1342)
     robot.move_to_point_backwards(1402, -1175)
-    robot.face_coordinate(RED_HIGH_GOAL_COORDINATE[0], RED_HIGH_GOAL_COORDINATE[1], aiming=True, offset=-2)
-    intake_motor_group.set_velocity(100, PERCENT)
-    robot.shoot_disk(degrees=60)
+    robot.face_coordinate(RED_HIGH_GOAL_COORDINATE[0], RED_HIGH_GOAL_COORDINATE[1], aiming=True, offset=-1.5)
+    robot.shoot_disk(degrees=50)
     intake_motor_group.stop()
+
+    # score two rollers
     robot.face_angle(270)
     robot.score_roller()
     drivetrain.drive_for(FORWARD, 100, MM)
@@ -334,50 +345,56 @@ def main():
     # Red half field route
     # ------------------------------------------------------------------------
 
-    # 3 disks
+    # intake three disks
     drivetrain.drive_for(FORWARD, 50, MM)
     intake_motor_group.set_velocity(70, PERCENT)
     intake_motor_group.spin(REVERSE)
-    robot.move_to_point(-308, -315)
+    robot.move_to_point(-308, -335)
+
+    # shoot out three disks (move at the same time)
     intake_motor_group.set_velocity(1.5, PERCENT)
     robot.face_coordinate(RED_HIGH_GOAL_COORDINATE[0], RED_HIGH_GOAL_COORDINATE[1], aiming=True, offset=-2)
     intake_motor_group.set_velocity(95, PERCENT)
-    drivetrain.set_drive_velocity(15.5, PERCENT)
+    drivetrain.set_drive_velocity(13, PERCENT)
     drivetrain.drive(FORWARD)
     robot.shoot_disk(degrees=100)
     drivetrain.stop()
     drivetrain.set_drive_velocity(100, PERCENT)
     intake_motor_group.set_velocity(100, PERCENT)
 
-    # 3 red low goal disks
+    # intake three red low goal disks
     intake_motor_group.spin(REVERSE)
     robot.move_to_point(-458, -480)
     robot.move_to_point(-480, -680)
     robot.move_to_point(-480, -1000)
     wait(20, MSEC)
+
+    # shoot out three red low goal disks
     intake_motor_group.set_velocity(1, PERCENT)
     robot.move_to_point_backwards(-450, -400)
     robot.face_coordinate(RED_HIGH_GOAL_COORDINATE[0], RED_HIGH_GOAL_COORDINATE[1], aiming=True)
-    intake_motor_group.set_velocity(100, PERCENT)
+    intake_motor_group.set_velocity(98, PERCENT)
     drivetrain.set_drive_velocity(1, PERCENT)
     drivetrain.drive(FORWARD)
     robot.shoot_disk(degrees=110)
     drivetrain.stop()
     drivetrain.set_drive_velocity(100, PERCENT)
 
-    # 3 red low goal disks + 7 match load
+    # intake three red low goal disks
     intake_motor_group.spin(REVERSE)
     robot.move_to_point(-508, -420)
     robot.move_to_point(-708, -440)
     robot.move_to_point(-965, -440)
     wait(50, MSEC)
+
+    # shoot out three red low goal disks and seven match load
     intake_motor_group.set_velocity(0.5, PERCENT)
     robot.move_to_point(-1540, -208)
     robot.face_coordinate(BLUE_HIGH_GOAL_COORDINATE[0], BLUE_HIGH_GOAL_COORDINATE[1], aiming=True, offset=2.5)
     intake_motor_group.set_velocity(100, PERCENT)
     robot.shoot_disk(degrees=392)
 
-    # 3 disks
+    # intake and shoot out three stacked disks
     robot.move_to_point(-1126, 145)
     intake_motor_group.spin_for(REVERSE, 120, DEGREES)
     robot.move_to_point(-1173.7350199733687, 279.46071904127825);
@@ -391,7 +408,7 @@ def main():
     # Middle field route
     # ------------------------------------------------------------------------
 
-    # 3 disks    
+    # intake three disks    
     robot.move_to_point(-877.2636484687084, 870.7833875511361)
     intake_motor_group.set_velocity(30, PERCENT)
     intake_motor_group.spin(REVERSE)
@@ -399,18 +416,24 @@ def main():
     intake_motor_group.set_velocity(100, PERCENT)
     drivetrain.drive_for(FORWARD, 610, MM)
 
+    # move to the middle of the field
     intake_motor_group.stop()
     drivetrain.drive_for(FORWARD, 540, MM)
-    robot.face_coordinate(BLUE_HIGH_GOAL_COORDINATE[0], BLUE_HIGH_GOAL_COORDINATE[1], aiming=True, offset=2)
-    intake_motor_group.set_velocity(90, PERCENT)
+    intake_motor_group.set_velocity(0.1, PERCENT)
+    intake_motor_group.spin(REVERSE)
+
+    # shoot out three disks    
+    robot.face_coordinate(BLUE_HIGH_GOAL_COORDINATE[0], BLUE_HIGH_GOAL_COORDINATE[1], aiming=True, offset=1)
+    intake_motor_group.set_velocity(95, PERCENT)
     robot.shoot_disk(degrees=100)
     
-
-    # 2 disks
+    # intake two disks
     intake_motor_group.set_velocity(100, PERCENT)
     intake_motor_group.spin(REVERSE)
     robot.move_to_point(608, -608)
-    robot.face_coordinate(BLUE_HIGH_GOAL_COORDINATE[0], BLUE_HIGH_GOAL_COORDINATE[1], aiming=True, offset=2)
+
+    # shoot out two disks
+    robot.face_coordinate(BLUE_HIGH_GOAL_COORDINATE[0], BLUE_HIGH_GOAL_COORDINATE[1], aiming=True, offset=1)
     intake_motor_group.set_velocity(95, PERCENT)
     intake_motor_group.spin(REVERSE)
 vr_thread(main)
