@@ -369,7 +369,7 @@ def main():
     robot.move_to_point(-480, -1000)
     wait(20, MSEC)
 
-    # shoot out three red low goal disks
+    # shoot out three red low goal disks (move at the same time)
     intake_motor_group.set_velocity(1, PERCENT)
     robot.move_to_point_backwards(-450, -400)
     robot.face_coordinate(RED_HIGH_GOAL_COORDINATE[0], RED_HIGH_GOAL_COORDINATE[1], aiming=True)
